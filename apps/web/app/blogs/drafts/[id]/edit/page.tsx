@@ -1,6 +1,11 @@
 "use client";
 
+import { useState } from "react";
+import TiptapEditor from "../../../../../components/TipTapEditor";
+
 export default function EditDraft() {
+  const [content, setContent] = useState("Let's start with...");
+
   return (
     <div className="m-10 mockup-code">
       <form className="p-10 space-y-10">
@@ -19,7 +24,9 @@ export default function EditDraft() {
           />
         </div>
 
-        <div className="form-control"></div>
+        <div className="form-control">
+          <TiptapEditor content={content} onChange={setContent} />
+        </div>
 
         <div className="form-control flex flex-row my-10 gap-5">
           <button className="btn btn-outline">Save as draft</button>

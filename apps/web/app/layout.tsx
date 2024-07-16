@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import "./styles.css";
 import { AR_One_Sans } from "next/font/google";
 
-const sans = AR_One_Sans({ subsets: ["vietnamese"], weight: "600" });
+const sans = AR_One_Sans({ subsets: ["latin"], weight: "400" });
 
 export const metadata: Metadata = {
   title: "Dev Docs",

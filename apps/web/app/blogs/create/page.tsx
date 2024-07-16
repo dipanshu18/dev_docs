@@ -1,9 +1,15 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import TiptapEditor from "../../../components/TipTapEditor";
+import { useState } from "react";
 
 export default function WriteBlog() {
   const router = useRouter();
+
+  const [content, setContent] = useState("Let's start with...");
+
+  console.log(content);
 
   return (
     <div className="m-10 mockup-code">
@@ -23,7 +29,9 @@ export default function WriteBlog() {
           />
         </div>
 
-        <div className="form-control"></div>
+        <div className="form-control">
+          <TiptapEditor content={content} onChange={setContent} />
+        </div>
 
         <div className="form-control flex flex-row my-10 gap-5">
           <button className="btn btn-outline">Save as draft</button>
