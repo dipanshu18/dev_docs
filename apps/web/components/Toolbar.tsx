@@ -1,8 +1,10 @@
 import type { Editor } from "@tiptap/react";
 import { FaBold, FaItalic, FaStrikethrough } from "react-icons/fa6";
+import { GoHorizontalRule } from "react-icons/go";
 import { HiListBullet } from "react-icons/hi2";
 import { LuHeading1 } from "react-icons/lu";
 import { RiCodeBlock, RiListOrdered } from "react-icons/ri";
+import { VscNewline } from "react-icons/vsc";
 
 interface ToolbarProps {
   editor: Editor | null;
@@ -15,8 +17,8 @@ export default function Toolbar({ editor }: ToolbarProps) {
   }
 
   return (
-    <div className="p-3">
-      <div className="flex items-center justify-center gap-3">
+    <div className="p-3 border-2 border-base-300 shadow-2xl rounded">
+      <div className="flex items-center gap-3">
         <button
           onClick={(e) => {
             e.preventDefault();
@@ -109,10 +111,37 @@ export default function Toolbar({ editor }: ToolbarProps) {
           }}
           className={`
             btn 
-            ${editor.isActive("code") ? "btn-primary" : "btn-outline"}
+            ${editor.isActive("codeBlock") ? "btn-primary" : "btn-outline"}
             `}
         >
           <RiCodeBlock />
+        </button>
+
+        <button
+          onClick={(e) => {
+            e.preventDefault();
+
+            editor.chain().focus().setHorizontalRule().run();
+          }}
+          className={`
+            btn 
+            ${editor.isActive("hr") ? "btn-primary" : "btn-outline"}
+            `}
+        >
+          <GoHorizontalRule />
+        </button>
+        <button
+          onClick={(e) => {
+            e.preventDefault();
+
+            editor.chain().focus().setHardBreak().run();
+          }}
+          className={`
+            btn 
+            ${editor.isActive("br") ? "btn-primary" : "btn-outline"}
+            `}
+        >
+          <VscNewline />
         </button>
       </div>
     </div>

@@ -2,8 +2,21 @@ import Image from "next/image";
 import Link from "next/link";
 
 import Blogging from "../public/blogging.jpg";
+import { getServerSession } from "next-auth";
 
-export default function Home() {
+export default async function Home() {
+  const session = await getServerSession();
+
+  if (session) {
+    return (
+      <div>
+        <h1>{session.user?.image}</h1>
+        <h1>{session.user?.email}</h1>
+        <h1>{session.user?.name}</h1>
+      </div>
+    );
+  }
+
   return (
     <div className="hero min-h-screen">
       <div className="hero-content text-center md:text-left">
@@ -23,7 +36,7 @@ export default function Home() {
               A developer's blogging platform for sharing their knowledge and
               learnings with others
             </p>
-            <Link href={"/login"}>
+            <Link href={"/api/auth/signin"}>
               <button className="btn btn-primary">Get Started</button>
             </Link>
           </div>

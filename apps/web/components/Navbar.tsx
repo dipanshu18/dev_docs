@@ -1,7 +1,13 @@
 /* eslint-disable @next/next/no-img-element */
+"use client";
+
+import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 
 export default function Navbar() {
+  const session = useSession();
+  console.log(session);
+
   return (
     <div className="navbar bg-base-300">
       <div className="navbar-start">
@@ -58,8 +64,10 @@ export default function Navbar() {
             >
               <div className="w-10 rounded-full">
                 <img
-                  alt="Tailwind CSS Navbar component"
-                  src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"
+                  src={session.data?.user?.image!}
+                  width={10}
+                  height={10}
+                  alt={session.data?.user?.name + " profile picture"}
                 />
               </div>
             </div>
@@ -68,15 +76,10 @@ export default function Navbar() {
               className="menu menu-sm dropdown-content bg-base-300 rounded-box z-[1] mt-3 w-52 p-2 shadow"
             >
               <li>
-                <Link href={"/blogs/profile"} className="justify-between">
-                  Profile
-                </Link>
-              </li>
-              <li>
                 <Link href={"/blogs/your-blogs"}>Your blogs</Link>
               </li>
               <li>
-                <a>Logout</a>
+                <span onClick={async () => signOut()}>Logout</span>
               </li>
             </ul>
           </div>

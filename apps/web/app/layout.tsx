@@ -1,8 +1,9 @@
 import { Metadata } from "next";
 import "./styles.css";
-import { AR_One_Sans } from "next/font/google";
+import { Poppins } from "next/font/google";
+import { NextAuthProvider } from "./providers";
 
-const sans = AR_One_Sans({ subsets: ["latin"], weight: "400" });
+const poppins = Poppins({ subsets: ["latin"], weight: "400" });
 
 export const metadata: Metadata = {
   title: "Dev Docs",
@@ -17,9 +18,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={sans.className}>
-        <main className="container mx-auto"></main>
-        {children}
+      <body className={poppins.className}>
+        <NextAuthProvider>
+          <main>{children}</main>
+        </NextAuthProvider>
       </body>
     </html>
   );

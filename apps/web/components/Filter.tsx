@@ -3,7 +3,7 @@ export default function Filter() {
     <div className="flex items-center justify-center p-5 gap-5 w-full">
       <div className="">
         <select className="select select-bordered bg-base-300">
-          <option disabled selected>
+          <option disabled defaultValue="Category">
             Category
           </option>
           <option>Han Solo</option>
