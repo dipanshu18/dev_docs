@@ -1,20 +1,19 @@
 import Link from "next/link";
 
 /* eslint-disable @next/next/no-img-element */
-export default function DraftsCard() {
+export default function DraftsCard({ blog }: any) {
   return (
     <div className="card bg-base-300 w-full shadow-xl">
       <figure>
         <img
-          src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.jpg"
-          alt="Shoes"
+          src={`https://devdocs-thumbnails.s3.ap-south-1.amazonaws.com/${blog.thumbnail}`}
+          alt={blog.title + " thumbnail"}
         />
       </figure>
       <div className="card-body">
-        <h2 className="card-title">Blog Title</h2>
-        <p>If a dog chews shoes whose shoes does he choose?</p>
+        <h2 className="card-title">{blog.title}</h2>
         <div className="card-actions justify-end">
-          <Link href={"/blogs/drafts/:id"}>
+          <Link href={`/blogs/drafts/${blog.id}`}>
             <button className="btn btn-primary">Read more</button>
           </Link>
         </div>

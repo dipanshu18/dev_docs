@@ -9,9 +9,9 @@ export default async function BlogsLayout({
   children: ReactNode;
 }) {
   const session = await getServerSession();
-
-  if (!session || !session.user) {
-    redirect("/");
+  console.log(session);
+  if (!session) {
+    return redirect("/");
   }
 
   return (

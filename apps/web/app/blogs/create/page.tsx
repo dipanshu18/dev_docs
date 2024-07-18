@@ -1,37 +1,138 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 
 import { useRouter } from "next/navigation";
 import TiptapEditor from "../../../components/TipTapEditor";
-import { useState } from "react";
+import { FormEvent, useState } from "react";
+import { toast } from "sonner";
 
 export default function WriteBlog() {
   const router = useRouter();
+  const [preview, setPreview] = useState<string | null>(null);
 
-  const [content, setContent] = useState(`<h1>Hello, world✨</h1>
-    <p>Today we are gonna explore {tech stack}...</p>
-    <pre><code>for (var i=1; i <= 20; i++)
-{
-  if (i % 15 == 0)
-    console.log("FizzBuzz");
-  else if (i % 3 == 0)
-    console.log("Fizz");
-  else if (i % 5 == 0)
-    console.log("Buzz");
-  else
-    console.log(i);
-}</code></pre>
-    `);
+  const [blog, setBlog] = useState<{
+    thumbnail: undefined | File | string;
+    title: string;
+    content: string;
+    type: "draft" | "publish";
+  }>({
+    thumbnail: undefined,
+    title: "",
+    content: `<h1>Hello, world✨</h1>
+      <p>Today we are gonna explore {tech stack}...</p>
+      `,
+    type: "draft",
+  });
 
-  console.log(content);
+  function handleThumbnailChange(e: React.ChangeEvent<HTMLInputElement>) {
+    if (e.target.files && e.target.files.length > 0) {
+      const file = e.target.files[0]!;
+
+      // Check file size
+      if (file.size > 3 * 1024 * 1024) {
+        toast.error("File size should be less than 3 MB");
+        return;
+      }
+
+      const img = new Image();
+      const reader = new FileReader();
+
+      reader.onload = (event) => {
+        if (event.target?.result) {
+          img.src = event.target.result as string;
+
+          img.onload = () => {
+            if (img.width !== 1000 || img.height !== 420) {
+              toast.error("Image dimensions should be 1000x420");
+              return;
+            }
+
+            setBlog({ ...blog, thumbnail: file });
+            setPreview(URL.createObjectURL(file));
+          };
+        }
+      };
+
+      reader.readAsDataURL(file);
+    }
+  }
+
+  async function handleCreateBlog(e: FormEvent) {
+    e.preventDefault();
+
+    const blogData: {
+      title?: string;
+      content?: string;
+      type?: "draft" | "publish";
+      thumbnailUrl?: undefined | string;
+    } = {};
+
+    if (blog.thumbnail && blog.thumbnail instanceof File) {
+      const s3Response = await fetch(
+        `/api/s3-upload?fileName=${blog.thumbnail.name}`
+      );
+
+      const response = await s3Response.json();
+      if (s3Response.ok) {
+        const uploadResponse = await fetch(response.url, {
+          method: "PUT",
+          headers: {
+            "Content-Type": blog.thumbnail.type,
+          },
+          body: blog.thumbnail,
+        });
+
+        if (!uploadResponse.ok) {
+          return toast.error("Thumbnail upload failed!");
+        }
+
+        blogData["thumbnailUrl"] = await response.key;
+      } else {
+        return toast.error("Something went wrong!");
+      }
+    }
+
+    blogData["title"] = blog.title;
+    blogData["content"] = blog.content;
+    blogData["type"] = blog.type;
+
+    const response = await fetch("/api/blogs/create", {
+      method: "POST",
+      body: JSON.stringify(blogData),
+    });
+
+    if (response.ok) {
+      blog.type === "publish"
+        ? toast.success("Blog created successfully!")
+        : toast.success("Blog saved as draft");
+
+      router.refresh();
+      return router.push("/blogs");
+    }
+
+    return toast.error("Something went wrong!");
+  }
 
   return (
     <div className="m-10 mockup-code">
-      <form className="p-10 space-y-10">
+      <form
+        id="create-blog"
+        onSubmit={handleCreateBlog}
+        className="p-10 space-y-10"
+      >
         <div className="form-control ">
-          <label className="mb-5">Blog Thumbnail</label>
+          <label className="mb-1">Blog Thumbnail</label>
+          {preview && (
+            <div className="form-control my-5">
+              <img src={preview} alt="Thumbnail Preview" className="w-full" />
+            </div>
+          )}
           <input
             type="file"
-            accept="image/*"
+            name="thumbnail"
+            accept="image/jpeg"
+            required
+            onChange={handleThumbnailChange}
             className="file-input w-full max-w-xl"
           />
         </div>
@@ -39,17 +140,40 @@ export default function WriteBlog() {
         <div className="form-control">
           <input
             placeholder="Title"
+            name="title"
+            onChange={(e) => setBlog({ ...blog, title: e.target.value })}
+            required
             className="input border-none bg-transparent w-full pr-12 text-5xl outline-none focus-visible:outline-none disabled:cursor-not-allowed"
           />
         </div>
         <div className="form-control">
-          <TiptapEditor content={content} onChange={setContent} />
+          <TiptapEditor content={blog.content} blog={blog} onChange={setBlog} />
         </div>
 
         <div className="form-control flex flex-row my-10 gap-5">
-          <button className="btn btn-outline">Save as draft</button>
-          <button className="btn btn-success">Publish</button>
-          <button className="btn" onClick={() => router.push("/blogs")}>
+          <button
+            onClick={() => {
+              setBlog({ ...blog, type: "draft" });
+            }}
+            className="btn btn-outline"
+          >
+            Save as draft
+          </button>
+          <button
+            onClick={() => {
+              setBlog({ ...blog, type: "publish" });
+            }}
+            className="btn btn-success"
+          >
+            Publish
+          </button>
+          <button
+            className="btn"
+            onClick={(e) => {
+              e.preventDefault();
+              router.push("/blogs");
+            }}
+          >
             Cancel
           </button>
         </div>

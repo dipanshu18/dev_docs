@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import "./styles.css";
 import { Poppins } from "next/font/google";
 import { NextAuthProvider } from "./providers";
+import { Toaster } from "sonner";
 
 const poppins = Poppins({ subsets: ["latin"], weight: "400" });
 
@@ -20,7 +21,10 @@ export default function RootLayout({
     <html lang="en">
       <body className={poppins.className}>
         <NextAuthProvider>
-          <main>{children}</main>
+          <main>
+            {children}
+            <Toaster richColors />
+          </main>
         </NextAuthProvider>
       </body>
     </html>

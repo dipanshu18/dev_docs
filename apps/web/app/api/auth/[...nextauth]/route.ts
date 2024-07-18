@@ -22,7 +22,7 @@ export const authOptions: NextAuthOptions = {
     maxAge: 24 * 60 * 60,
   },
   pages: {
-    signIn: "/login",
+    signOut: "/",
   },
   callbacks: {
     async signIn() {

@@ -3,25 +3,28 @@
 import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import Toolbar from "./Toolbar";
-import { Dispatch, SetStateAction } from "react";
-import Paragraph from "@tiptap/extension-paragraph";
-import Document from "@tiptap/extension-document";
-import Text from "@tiptap/extension-text";
 import CodeBlock from "@tiptap/extension-code-block";
 import HorizontalRule from "@tiptap/extension-horizontal-rule";
 import HardBreak from "@tiptap/extension-hard-break";
 
 interface TiptapEditorProps {
   content: string;
-  onChange: Dispatch<SetStateAction<string>>;
+  onChange: any;
+  blog: {
+    thumbnail: undefined | File | string;
+    title: string;
+    content: string;
+    type: "draft" | "publish";
+  };
 }
 
-export default function TiptapEditor({ content, onChange }: TiptapEditorProps) {
+export default function TiptapEditor({
+  content,
+  blog,
+  onChange,
+}: TiptapEditorProps) {
   const editor = useEditor({
     extensions: [
-      Document,
-      Paragraph,
-      Text,
       HorizontalRule,
       HardBreak,
       CodeBlock.configure({
@@ -43,7 +46,7 @@ export default function TiptapEditor({ content, onChange }: TiptapEditorProps) {
       },
     },
     onUpdate({ editor }) {
-      onChange(editor.getHTML());
+      onChange({ ...blog, content: editor.getHTML() });
     },
     content: content,
   });

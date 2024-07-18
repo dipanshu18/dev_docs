@@ -31,7 +31,7 @@ export default async function Home() {
               A developer's blogging platform for sharing their knowledge and
               learnings with others
             </p>
-            <Link href={"/login"}>
+            <Link href={"/api/auth/signin"}>
               <button className="btn btn-primary">Get Started</button>
             </Link>
           </div>

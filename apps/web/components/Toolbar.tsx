@@ -17,8 +17,8 @@ export default function Toolbar({ editor }: ToolbarProps) {
   }
 
   return (
-    <div className="p-3 border-2 border-base-300 shadow-2xl rounded">
-      <div className="flex items-center gap-3">
+    <div className="p-3">
+      <div className="flex items-center flex-wrap gap-3">
         <button
           onClick={(e) => {
             e.preventDefault();
