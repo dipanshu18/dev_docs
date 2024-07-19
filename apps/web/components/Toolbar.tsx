@@ -3,7 +3,7 @@ import { FaBold, FaItalic, FaStrikethrough } from "react-icons/fa6";
 import { GoHorizontalRule } from "react-icons/go";
 import { HiListBullet } from "react-icons/hi2";
 import { LuHeading1 } from "react-icons/lu";
-import { RiCodeBlock, RiListOrdered } from "react-icons/ri";
+import { RiCodeBlock } from "react-icons/ri";
 import { VscNewline } from "react-icons/vsc";
 
 interface ToolbarProps {
@@ -73,20 +73,6 @@ export default function Toolbar({ editor }: ToolbarProps) {
             `}
         >
           <HiListBullet />
-        </button>
-
-        <button
-          onClick={(e) => {
-            e.preventDefault();
-
-            editor.chain().focus().toggleList("orderedList", "listItem").run();
-          }}
-          className={`
-            btn 
-            ${editor.isActive("orderedList") ? "btn-primary" : "btn-outline"}
-            `}
-        >
-          <RiListOrdered />
         </button>
 
         <button

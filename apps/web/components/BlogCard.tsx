@@ -1,6 +1,6 @@
+import Image from "next/image";
 import Link from "next/link";
 
-/* eslint-disable @next/next/no-img-element */
 export default function BlogCard({
   type,
   blog,
@@ -11,14 +11,16 @@ export default function BlogCard({
   return (
     <div className="card bg-base-300 w-full shadow-xl">
       <figure>
-        <img
+        <Image
           src={`https://devdocs-thumbnails.s3.ap-south-1.amazonaws.com/${blog.thumbnail}`}
           alt={blog.title + " thumbnail"}
+          width={500}
+          height={500}
         />
       </figure>
       <div className="card-body">
         <h2 className="card-title">{blog.title}</h2>
-        <div className="card-actions justify-end">
+        <div className="card-actions mt-5">
           <Link
             href={
               type === "user"

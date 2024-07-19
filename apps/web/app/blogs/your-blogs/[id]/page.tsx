@@ -1,4 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
+import UserBlogActions from "../../../../components/UserBlogActions";
 import { prisma } from "../../../../lib/prisma";
 
 async function fetchUserBlog(id: string) {
@@ -41,11 +42,7 @@ export default async function YourBlogDetail({
       </div>
       {/*<!-- End Social story card --> */}
 
-      <div className="px-10 flex gap-5 items-center my-5">
-        <button className="btn btn-success">Unpublish</button>
-
-        <button className="btn btn-warning">Delete</button>
-      </div>
+      <UserBlogActions blog={userBlog} />
     </div>
   );
 }

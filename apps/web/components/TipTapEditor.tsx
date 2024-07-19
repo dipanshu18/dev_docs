@@ -10,12 +10,7 @@ import HardBreak from "@tiptap/extension-hard-break";
 interface TiptapEditorProps {
   content: string;
   onChange: any;
-  blog: {
-    thumbnail: undefined | File | string;
-    title: string;
-    content: string;
-    type: "draft" | "publish";
-  };
+  blog: any;
 }
 
 export default function TiptapEditor({

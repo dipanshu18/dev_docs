@@ -9,6 +9,7 @@ import { toast } from "sonner";
 export default function WriteBlog() {
   const router = useRouter();
   const [preview, setPreview] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
 
   const [blog, setBlog] = useState<{
     thumbnail: undefined | File | string;
@@ -67,6 +68,8 @@ export default function WriteBlog() {
       thumbnailUrl?: undefined | string;
     } = {};
 
+    setLoading(true);
+
     if (blog.thumbnail && blog.thumbnail instanceof File) {
       const s3Response = await fetch(
         `/api/s3-upload?fileName=${blog.thumbnail.name}`
@@ -88,6 +91,7 @@ export default function WriteBlog() {
 
         blogData["thumbnailUrl"] = await response.key;
       } else {
+        setLoading(false);
         return toast.error("Something went wrong!");
       }
     }
@@ -106,10 +110,12 @@ export default function WriteBlog() {
         ? toast.success("Blog created successfully!")
         : toast.success("Blog saved as draft");
 
+      setLoading(false);
       router.refresh();
       return router.push("/blogs");
     }
 
+    setLoading(false);
     return toast.error("Something went wrong!");
   }
 
@@ -128,6 +134,7 @@ export default function WriteBlog() {
             </div>
           )}
           <input
+            disabled={loading}
             type="file"
             name="thumbnail"
             accept="image/jpeg"
@@ -152,6 +159,7 @@ export default function WriteBlog() {
 
         <div className="form-control flex flex-row my-10 gap-5">
           <button
+            disabled={loading}
             onClick={() => {
               setBlog({ ...blog, type: "draft" });
             }}
@@ -160,6 +168,7 @@ export default function WriteBlog() {
             Save as draft
           </button>
           <button
+            disabled={loading}
             onClick={() => {
               setBlog({ ...blog, type: "publish" });
             }}
@@ -168,6 +177,7 @@ export default function WriteBlog() {
             Publish
           </button>
           <button
+            disabled={loading}
             className="btn"
             onClick={(e) => {
               e.preventDefault();

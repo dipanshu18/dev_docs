@@ -1,7 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import { FaFire, FaHeart, FaThumbsUp } from "react-icons/fa6";
 import { prisma } from "../../../lib/prisma";
-import { getServerSession } from "next-auth";
 
 async function fetchBlog(id: string) {
   const blog = await prisma.blog.findUnique({
@@ -10,7 +8,21 @@ async function fetchBlog(id: string) {
     },
   });
 
-  return blog;
+  const user = await prisma.blog.findUnique({
+    where: {
+      id,
+    },
+    select: {
+      user: {
+        select: {
+          name: true,
+          image: true,
+        },
+      },
+    },
+  });
+
+  return { blog, user };
 }
 
 export default async function BlogDetail({
@@ -18,8 +30,7 @@ export default async function BlogDetail({
 }: {
   params: { id: string };
 }) {
-  const session = await getServerSession();
-  const blog = await fetchBlog(params.id);
+  const { blog, user } = await fetchBlog(params.id);
 
   if (!blog) {
     return (
@@ -46,42 +57,33 @@ export default async function BlogDetail({
       {/*<!-- End Social story card --> */}
 
       <div className="px-10 ">
-        {/*  <!-- Action icon buttons --> */}
-        <div className="flex gap-5 items-center my-5">
-          <button className="btn btn-primary">
-            <FaHeart />
-            12
-          </button>
-          <button className="btn btn-primary">
-            <FaThumbsUp />
-            12
-          </button>
-          <button className="btn btn-primary">
-            <FaFire />
-            12
-          </button>
-        </div>
+        {/* <BlogActions
+          giveLike={giveLike}
+          giveHeart={giveHeart}
+          giveFire={giveFire}
+          blogId={blog.id}
+        /> */}
+      </div>
 
-        {/*  <!-- Header--> */}
-        <div>
-          <header className="flex gap-4">
-            <span className="relative inline-flex h-12 w-12 items-center justify-center rounded-full text-white">
-              <img
-                src={session?.user?.image!}
-                alt={session?.user?.name!}
-                width="48"
-                height="48"
-                className="max-w-full rounded-full"
-              />
-            </span>
-            <div>
-              <h3 className="text-xl font-medium">{session?.user?.name!}</h3>
-              <p className="text-sm text-slate-400">
-                {blog.createdAt.toDateString()}
-              </p>
-            </div>
-          </header>
-        </div>
+      {/*  <!-- Header--> */}
+      <div className="p-10">
+        <header className="flex gap-4">
+          <span className="relative inline-flex h-12 w-12 items-center justify-center rounded-full text-white">
+            <img
+              src={user?.user.image!}
+              alt={user?.user?.name!}
+              width="48"
+              height="48"
+              className="max-w-full rounded-full"
+            />
+          </span>
+          <div>
+            <h3 className="text-xl font-medium">{user?.user?.name!}</h3>
+            <p className="text-sm text-slate-400">
+              {blog.createdAt.toDateString()}
+            </p>
+          </div>
+        </header>
       </div>
     </div>
   );

@@ -16,6 +16,9 @@ model User {
   accounts      Account[]
   sessions      Session[]
   Blog          Blog[]
+  likes         Like[]
+  hearts        Heart[]
+  fires         Fire[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -65,9 +68,9 @@ model Blog {
   title     String
   thumbnail String
   body      String
-  likes     Int      @default(0)
-  fires     Int      @default(0)
-  hearts    Int      @default(0)
+  likes     Like[]
+  fires     Fire[]
+  hearts    Heart[]
   userId    String
   published Boolean  @default(false)
   createdAt DateTime @default(now())
@@ -75,4 +78,28 @@ model Blog {
   user      User     @relation(fields: [userId], references: [id])
 
   @@map("Blogs")
+}
+
+model Like {
+  id     String @id @default(uuid())
+  blog   Blog   @relation(references: [id], fields: [blogId])
+  blogId String
+  user   User   @relation(references: [id], fields: [userId])
+  userId String @unique
+}
+
+model Heart {
+  id     String @id @default(uuid())
+  blog   Blog   @relation(references: [id], fields: [blogId])
+  blogId String
+  user   User   @relation(references: [id], fields: [userId])
+  userId String @unique
+}
+
+model Fire {
+  id     String @id @default(uuid())
+  blog   Blog   @relation(references: [id], fields: [blogId])
+  blogId String
+  user   User   @relation(references: [id], fields: [userId])
+  userId String @unique
 }

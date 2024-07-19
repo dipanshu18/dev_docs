@@ -1,7 +1,7 @@
-/* eslint-disable @next/next/no-img-element */
 "use client";
 
 import { signOut, useSession } from "next-auth/react";
+import Image from "next/image";
 import Link from "next/link";
 
 export default function Navbar() {
@@ -62,12 +62,14 @@ export default function Navbar() {
               className="btn btn-ghost btn-circle avatar"
             >
               <div className="w-10 rounded-full">
-                <img
-                  src={session.data?.user?.image!}
-                  width={10}
-                  height={10}
-                  alt={session.data?.user?.name + " profile picture"}
-                />
+                {session.data?.user?.image && (
+                  <Image
+                    src={session.data?.user?.image!}
+                    width={10}
+                    height={10}
+                    alt={session.data?.user?.name + " profile picture"}
+                  />
+                )}
               </div>
             </div>
             <ul

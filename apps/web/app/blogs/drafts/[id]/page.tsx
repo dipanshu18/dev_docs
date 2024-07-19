@@ -1,6 +1,6 @@
-/* eslint-disable @next/next/no-img-element */
-import Link from "next/link";
 import { prisma } from "../../../../lib/prisma";
+import DraftActions from "../../../../components/DraftActions";
+import Image from "next/image";
 
 async function fetchDraftBlog(id: string) {
   const draft = await prisma.blog.findUnique({
@@ -29,8 +29,10 @@ export default async function DraftDetail({
 
   return (
     <div className="m-10 mockup-code">
-      <img
+      <Image
         src={`https://devdocs-thumbnails.s3.ap-south-1.amazonaws.com/${draft.thumbnail}`}
+        width={500}
+        height={500}
         alt={draft.title + " thumbnail"}
         className="w-full"
       />
@@ -43,13 +45,7 @@ export default async function DraftDetail({
       </div>
       {/*<!-- End Social story card --> */}
 
-      <div className="px-10 flex gap-5 items-center my-5">
-        <button className="btn btn-success">Publish</button>
-        <Link href={"/blogs/drafts/:id/edit"}>
-          <button className="btn btn-primary">Edit</button>
-        </Link>
-        <button className="btn btn-warning">Delete</button>
-      </div>
+      <DraftActions draft={draft} />
     </div>
   );
 }
