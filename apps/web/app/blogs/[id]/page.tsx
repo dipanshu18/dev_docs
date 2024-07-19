@@ -56,14 +56,9 @@ export default async function BlogDetail({
       </div>
       {/*<!-- End Social story card --> */}
 
-      <div className="px-10 ">
-        {/* <BlogActions
-          giveLike={giveLike}
-          giveHeart={giveHeart}
-          giveFire={giveFire}
-          blogId={blog.id}
-        /> */}
-      </div>
+      {/* <div className="px-10 ">
+        <BlogActions likes={likes} hearts={hearts} fires={fires} id={blog.id} />
+      </div> */}
 
       {/*  <!-- Header--> */}
       <div className="p-10">
