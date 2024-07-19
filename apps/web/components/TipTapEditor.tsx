@@ -8,7 +8,7 @@ import HorizontalRule from "@tiptap/extension-horizontal-rule";
 import HardBreak from "@tiptap/extension-hard-break";
 
 interface TiptapEditorProps {
-  content: string;
+  content: any;
   onChange: any;
   blog: any;
 }
@@ -26,11 +26,10 @@ export default function TiptapEditor({
         languageClassPrefix: "language-",
       }),
       StarterKit.configure({
-        heading: {
+        paragraph: {
           HTMLAttributes: {
-            class: "text-3xl font-semibold",
+            class: "min-h-[1rem]",
           },
-          levels: [1],
         },
       }),
     ],
@@ -48,7 +47,7 @@ export default function TiptapEditor({
 
   return (
     <>
-      <Toolbar editor={editor} content={content} />
+      <Toolbar editor={editor} />
       <EditorContent style={{ whiteSpace: "pre-line" }} editor={editor} />
     </>
   );

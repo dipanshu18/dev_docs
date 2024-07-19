@@ -19,9 +19,7 @@ export default function WriteBlog() {
   }>({
     thumbnail: undefined,
     title: "",
-    content: `<h1>Hello, world✨</h1>
-      <p>Today we are gonna explore {tech stack}...</p>
-      `,
+    content: "",
     type: "draft",
   });
 

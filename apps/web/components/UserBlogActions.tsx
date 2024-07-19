@@ -25,7 +25,7 @@ export default function UserBlogActions({ blog }: BlogProps) {
 
     if (unpublished) {
       toast.success("Blog unpublished!");
-      router.push("/blogs/drafts");
+      router.push("/blogs/your-blogs");
       router.refresh();
       return;
     }

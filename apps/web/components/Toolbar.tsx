@@ -8,7 +8,6 @@ import { VscNewline } from "react-icons/vsc";
 
 interface ToolbarProps {
   editor: Editor | null;
-  content: string;
 }
 
 export default function Toolbar({ editor }: ToolbarProps) {
