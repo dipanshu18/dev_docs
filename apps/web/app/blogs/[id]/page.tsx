@@ -1,4 +1,4 @@
-/* eslint-disable @next/next/no-img-element */
+import Image from "next/image";
 import { prisma } from "../../../lib/prisma";
 
 async function fetchBlog(id: string) {
@@ -42,9 +42,11 @@ export default async function BlogDetail({
 
   return (
     <div className="m-10 mockup-code">
-      <img
+      <Image
         src={`https://devdocs-thumbnails.s3.ap-south-1.amazonaws.com/${blog.thumbnail}`}
         alt={blog.title + " thumbnail"}
+        width={500}
+        height={500}
         className="w-full"
       />
       <div className="px-10 grid grid-cols-1">
@@ -64,11 +66,11 @@ export default async function BlogDetail({
       <div className="p-10">
         <header className="flex gap-4">
           <span className="relative inline-flex h-12 w-12 items-center justify-center rounded-full text-white">
-            <img
+            <Image
               src={user?.user.image!}
               alt={user?.user?.name!}
-              width="48"
-              height="48"
+              width={48}
+              height={48}
               className="max-w-full rounded-full"
             />
           </span>
