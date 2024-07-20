@@ -84,6 +84,7 @@ export default function WriteBlog() {
         });
 
         if (!uploadResponse.ok) {
+          setLoading(false);
           return toast.error("Thumbnail upload failed!");
         }
 
@@ -155,7 +156,7 @@ export default function WriteBlog() {
           <TiptapEditor content={blog.content} blog={blog} onChange={setBlog} />
         </div>
 
-        <div className="form-control flex flex-row my-10 gap-5">
+        <div className="form-control flex flex-row my-10 gap-5 flex-wrap">
           <button
             disabled={loading}
             onClick={() => {

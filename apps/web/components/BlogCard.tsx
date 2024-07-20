@@ -14,8 +14,9 @@ export default function BlogCard({
         <Image
           src={`https://devdocs-thumbnails.s3.ap-south-1.amazonaws.com/${blog.thumbnail}`}
           alt={blog.title + " thumbnail"}
-          width={500}
-          height={500}
+          width={1000}
+          height={420}
+          className="w-full"
         />
       </figure>
       <div className="card-body">

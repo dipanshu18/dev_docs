@@ -1,4 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
+import Image from "next/image";
 import UserBlogActions from "../../../../components/UserBlogActions";
 import { prisma } from "../../../../lib/prisma";
 
@@ -29,9 +30,11 @@ export default async function YourBlogDetail({
 
   return (
     <div className="m-10 mockup-code">
-      <img
+      <Image
         src={`https://devdocs-thumbnails.s3.ap-south-1.amazonaws.com/${userBlog.thumbnail}`}
         alt={userBlog.title + " thumbnail"}
+        width={1000}
+        height={420}
         className="w-full"
       />
       <div className="px-10 grid grid-cols-1">
