@@ -2,9 +2,14 @@
 
 import Image from "next/image";
 import { useState } from "react";
-import { addCommentReply } from "../lib/actions/comment";
+import {
+  addCommentReply,
+  deleteCommentBlog,
+  deleteCommentReplyBlog,
+} from "../lib/actions/comment";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
+import { FaTrash } from "react-icons/fa6";
 
 interface CommentProps {
   comment: {
@@ -16,12 +21,13 @@ interface CommentProps {
     };
     body: string;
     replies: {
+      id: string;
+      body: string;
       user: {
         id: string;
         name: string | null;
         image: string | null;
       };
-      body: string;
     }[];
   };
   blogId: string;
@@ -64,6 +70,20 @@ export default function CommentBubble({ comment, blogId }: CommentProps) {
           </div>
         </div>
         <div className="chat-bubble my-2 w-full bg-gray-700">
+          {session && session.data?.user.id === comment.user.id && (
+            <div className="absolute right-0 pt-2 pr-5 flex gap-3">
+              <button
+                className="btn btn-ghost"
+                onClick={async () => {
+                  console.log(comment.id);
+                  await deleteCommentBlog(comment.id);
+                  router.refresh();
+                }}
+              >
+                <FaTrash />
+              </button>
+            </div>
+          )}
           <div className="text-sm font-extrabold">
             <strong>{comment.user.name}</strong>
           </div>
@@ -80,7 +100,7 @@ export default function CommentBubble({ comment, blogId }: CommentProps) {
       </div>
 
       {showReplyInput && (
-        <div className="flex gap-5 mt-2 w-full">
+        <div className="flex gap-5 mt-2 px-20 w-full">
           <input
             type="text"
             onChange={(e) => setCommentReply(e.target.value)}
@@ -112,6 +132,20 @@ export default function CommentBubble({ comment, blogId }: CommentProps) {
                   </div>
                 </div>
                 <div className="chat-bubble w-full bg-gray-900">
+                  {session && session.data?.user.id === reply.user.id && (
+                    <div className="absolute top-0 right-0 pt-2 pr-5 flex gap-3">
+                      <button
+                        className="btn btn-ghost"
+                        onClick={async () => {
+                          console.log(reply.id);
+                          await deleteCommentReplyBlog(comment.id, reply.id);
+                          router.refresh();
+                        }}
+                      >
+                        <FaTrash />
+                      </button>
+                    </div>
+                  )}
                   <div className="text-sm font-extrabold">
                     <strong>{reply.user.name}</strong>
                   </div>

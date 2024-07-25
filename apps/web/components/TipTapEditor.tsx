@@ -2,10 +2,12 @@
 
 import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
-import Toolbar from "./Toolbar";
+import Placeholder from "@tiptap/extension-placeholder";
 import CodeBlock from "@tiptap/extension-code-block";
 import HorizontalRule from "@tiptap/extension-horizontal-rule";
 import HardBreak from "@tiptap/extension-hard-break";
+
+import Toolbar from "./Toolbar";
 
 interface TiptapEditorProps {
   content: any;
@@ -31,6 +33,9 @@ export default function TiptapEditor({
             class: "min-h-[1rem]",
           },
         },
+      }),
+      Placeholder.configure({
+        placeholder: "Write something...",
       }),
     ],
     editorProps: {

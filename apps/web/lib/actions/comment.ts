@@ -28,6 +28,16 @@ export async function addCommentBlog(comment: UserComment) {
   return addComment;
 }
 
+export async function deleteCommentBlog(commentId: string) {
+  const deletedComment = await prisma.comment.delete({
+    where: {
+      id: commentId,
+    },
+  });
+
+  return deletedComment;
+}
+
 export async function addCommentReply(reply: CommentReply) {
   const commentExists = await prisma.comment.findUnique({
     where: {
@@ -49,4 +59,27 @@ export async function addCommentReply(reply: CommentReply) {
   });
 
   return addReply;
+}
+
+export async function deleteCommentReplyBlog(
+  commentId: string,
+  replyId: string
+) {
+  const commentExists = await prisma.comment.findUnique({
+    where: {
+      id: commentId,
+    },
+  });
+
+  if (!commentExists) {
+    return NextResponse.json({ msg: "Comment not exists!" }, { status: 404 });
+  }
+
+  const deletedCommentReply = await prisma.reply.delete({
+    where: {
+      id: replyId,
+    },
+  });
+
+  return deletedCommentReply;
 }

@@ -43,13 +43,25 @@
 }
 
 h1 {
-  font-size: 2rem;
+  font-size: 1.5rem;
   font-weight: 700;
+}
+
+strong {
+  font-weight: 900;
 }
 
 p:empty::before {
   content: "";
   display: inline-block;
+}
+
+.tiptap p.is-editor-empty:first-child::before {
+  color: #adb5bd;
+  content: attr(data-placeholder);
+  float: left;
+  height: 0;
+  pointer-events: none;
 }
 
 .mockup-code ul {

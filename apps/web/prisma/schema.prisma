@@ -85,7 +85,7 @@ model Blog {
 
 model Like {
   id     String @id @default(uuid())
-  blog   Blog   @relation(references: [id], fields: [blogId])
+  blog   Blog   @relation(references: [id], fields: [blogId], onDelete: Cascade)
   blogId String
   user   User   @relation(references: [id], fields: [userId])
   userId String
@@ -95,7 +95,7 @@ model Like {
 
 model Fire {
   id     String @id @default(uuid())
-  blog   Blog   @relation(references: [id], fields: [blogId])
+  blog   Blog   @relation(references: [id], fields: [blogId], onDelete: Cascade)
   blogId String
   user   User   @relation(references: [id], fields: [userId])
   userId String
@@ -105,7 +105,7 @@ model Fire {
 
 model Heart {
   id     String @id @default(uuid())
-  blog   Blog   @relation(references: [id], fields: [blogId])
+  blog   Blog   @relation(references: [id], fields: [blogId], onDelete: Cascade)
   blogId String
   user   User   @relation(references: [id], fields: [userId])
   userId String
@@ -115,7 +115,7 @@ model Heart {
 
 model Comment {
   id      String  @id @default(uuid())
-  blog    Blog    @relation(references: [id], fields: [blogId])
+  blog    Blog    @relation(references: [id], fields: [blogId], onDelete: Cascade)
   blogId  String
   user    User    @relation(references: [id], fields: [userId])
   userId  String
@@ -126,9 +126,9 @@ model Comment {
 model Reply {
   id        String  @id @default(uuid())
   body      String
-  comment   Comment @relation(references: [id], fields: [commentId])
+  comment   Comment @relation(references: [id], fields: [commentId], onDelete: Cascade)
   commentId String
-  blog      Blog    @relation(references: [id], fields: [blogId])
+  blog      Blog    @relation(references: [id], fields: [blogId], onDelete: Cascade)
   blogId    String
   user      User    @relation(references: [id], fields: [userId])
   userId    String

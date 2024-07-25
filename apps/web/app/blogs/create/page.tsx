@@ -19,7 +19,7 @@ export default function WriteBlog() {
   }>({
     thumbnail: undefined,
     title: "",
-    content: "<strong>Starting writing...</strong>",
+    content: "",
     type: "draft",
   });
 

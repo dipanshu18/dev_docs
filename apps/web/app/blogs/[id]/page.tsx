@@ -25,6 +25,7 @@ async function fetchBlog(id: string) {
           body: true,
           replies: {
             select: {
+              id: true,
               body: true,
               user: {
                 select: {
@@ -122,7 +123,11 @@ export default async function BlogDetail({
 
         <div className="mt-5">
           {blog.comments.map((comment) => (
-            <CommentBubble comment={comment} blogId={blog.id} />
+            <CommentBubble
+              key={comment.id}
+              comment={comment}
+              blogId={blog.id}
+            />
           ))}
         </div>
       </div>

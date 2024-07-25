@@ -20,8 +20,9 @@ export default function BlogComment({ id }: { id: string }) {
       userId: session.data?.user.id!,
     };
 
-    await addCommentBlog(commentBody);
     setComment("");
+
+    await addCommentBlog(commentBody);
     router.refresh();
   }
 
@@ -30,6 +31,7 @@ export default function BlogComment({ id }: { id: string }) {
       <input
         type="text"
         onChange={(e) => setComment(e.target.value)}
+        value={comment}
         placeholder="Type your comment here..."
         className="input input-bordered w-full"
       />
