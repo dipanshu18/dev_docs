@@ -19,6 +19,8 @@ model User {
   likes         Like[]
   fires         Fire[]
   hearts        Heart[]
+  comments      Comment[]
+  replies       Reply[]
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
 }
@@ -63,18 +65,20 @@ model VerificationToken {
 }
 
 model Blog {
-  id        String   @id @default(uuid())
+  id        String    @id @default(uuid())
   title     String
   thumbnail String
   body      String
   userId    String
-  published Boolean  @default(false)
+  published Boolean   @default(false)
   likes     Like[]
   fires     Fire[]
   hearts    Heart[]
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  user      User     @relation(fields: [userId], references: [id])
+  comments  Comment[]
+  replies   Reply[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  user      User      @relation(fields: [userId], references: [id])
 
   @@map("Blogs")
 }
@@ -107,4 +111,25 @@ model Heart {
   userId String
 
   @@unique([blogId, userId])
+}
+
+model Comment {
+  id      String  @id @default(uuid())
+  blog    Blog    @relation(references: [id], fields: [blogId])
+  blogId  String
+  user    User    @relation(references: [id], fields: [userId])
+  userId  String
+  body    String
+  replies Reply[]
+}
+
+model Reply {
+  id        String  @id @default(uuid())
+  body      String
+  comment   Comment @relation(references: [id], fields: [commentId])
+  commentId String
+  blog      Blog    @relation(references: [id], fields: [blogId])
+  blogId    String
+  user      User    @relation(references: [id], fields: [userId])
+  userId    String
 }
