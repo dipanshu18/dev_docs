@@ -11,6 +11,8 @@ export default function DraftsCard({ blog }: any) {
           width={1000}
           height={420}
           className="w-full"
+          priority
+          quality={100}
         />
       </figure>
       <div className="card-body">

@@ -35,6 +35,7 @@ export default async function Drafts() {
           width={500}
           height={500}
           alt="Drafts empty illustration pic"
+          priority
         />
       </div>
     );

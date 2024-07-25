@@ -35,6 +35,8 @@ export default async function YourBlogs() {
           width={300}
           height={300}
           alt="Profile blogs empty thumbnail"
+          priority
+          quality={100}
         />
       </div>
     );

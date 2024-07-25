@@ -65,9 +65,11 @@ export default function Navbar() {
                 {session.data?.user?.image && (
                   <Image
                     src={session.data?.user?.image!}
-                    width={10}
-                    height={10}
+                    width={50}
+                    height={50}
                     alt={session.data?.user?.name + " profile picture"}
+                    priority
+                    quality={100}
                   />
                 )}
               </div>

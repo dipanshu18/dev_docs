@@ -35,6 +35,8 @@ export default async function DraftDetail({
         height={500}
         alt={draft.title + " thumbnail"}
         className="w-full"
+        priority
+        quality={100}
       />
       <div className="px-10 grid grid-cols-1">
         {/*  <!-- Body--> */}

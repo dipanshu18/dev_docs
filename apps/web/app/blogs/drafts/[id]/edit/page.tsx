@@ -137,7 +137,6 @@ export default function EditDraft({ params }: { params: { id: string } }) {
     content ? (blogData["content"] = content.content) : "";
     blogData["type"] = type;
 
-    console.log(blogData);
     if (draft) {
       const response = await fetch(`/api/blogs/edit?id=${draft.id}`, {
         method: "PUT",

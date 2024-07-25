@@ -2,11 +2,17 @@
 import Image from "next/image";
 import UserBlogActions from "../../../../components/UserBlogActions";
 import { prisma } from "../../../../lib/prisma";
+import BlogActions from "../../../../components/BlogActions";
 
 async function fetchUserBlog(id: string) {
   const userBlog = await prisma.blog.findUnique({
     where: {
       id,
+    },
+    include: {
+      likes: true,
+      hearts: true,
+      fires: true,
     },
   });
 
@@ -36,6 +42,8 @@ export default async function YourBlogDetail({
         width={1000}
         height={420}
         className="w-full"
+        priority
+        quality={100}
       />
       <div className="px-10 grid grid-cols-1">
         <div>
@@ -44,6 +52,15 @@ export default async function YourBlogDetail({
         </div>
       </div>
       {/*<!-- End Social story card --> */}
+
+      <div className="px-10">
+        <BlogActions
+          likes={userBlog.likes.length}
+          hearts={userBlog.hearts.length}
+          fires={userBlog.fires.length}
+          id={userBlog.id}
+        />
+      </div>
 
       <UserBlogActions blog={userBlog} />
     </div>

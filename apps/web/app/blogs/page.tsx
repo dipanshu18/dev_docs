@@ -27,6 +27,7 @@ export default async function Blogs() {
           width={300}
           height={300}
           alt="Blogs empty thumbnail"
+          priority
         />
       </div>
     );

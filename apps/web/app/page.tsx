@@ -23,6 +23,7 @@ export default async function Home() {
               height={500}
               className="rounded-full"
               alt="Person writing blogs on laptop"
+              priority
             />
           </div>
           <div className="md:col-span-2">

@@ -17,6 +17,7 @@ export default function BlogCard({
           width={1000}
           height={420}
           className="w-full"
+          priority
         />
       </figure>
       <div className="card-body">

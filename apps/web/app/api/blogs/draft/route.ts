@@ -31,7 +31,5 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ msg: "Draft not found" }, { status: 404 });
   }
 
-  console.log(draft);
-
   return NextResponse.json(draft);
 }

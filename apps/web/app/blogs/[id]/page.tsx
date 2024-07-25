@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { prisma } from "../../../lib/prisma";
+import BlogActions from "../../../components/BlogActions";
 
 async function fetchBlog(id: string) {
   const blog = await prisma.blog.findUnique({
@@ -25,6 +26,20 @@ async function fetchBlog(id: string) {
   return { blog, user };
 }
 
+async function fetchBlogNums(id: string) {
+  const likes = await prisma.like.findMany({ where: { blogId: id } });
+
+  const fires = await prisma.fire.findMany({ where: { blogId: id } });
+
+  const hearts = await prisma.heart.findMany({ where: { blogId: id } });
+
+  return {
+    likes,
+    fires,
+    hearts,
+  };
+}
+
 export default async function BlogDetail({
   params,
 }: {
@@ -40,6 +55,8 @@ export default async function BlogDetail({
     );
   }
 
+  const { likes, fires, hearts } = await fetchBlogNums(params.id);
+
   return (
     <div className="m-10 mockup-code">
       <Image
@@ -48,6 +65,8 @@ export default async function BlogDetail({
         width={500}
         height={500}
         className="w-full"
+        priority
+        quality={100}
       />
       <div className="px-10 grid grid-cols-1">
         {/*  <!-- Body--> */}
@@ -58,9 +77,14 @@ export default async function BlogDetail({
       </div>
       {/*<!-- End Social story card --> */}
 
-      {/* <div className="px-10 ">
-        <BlogActions likes={likes} hearts={hearts} fires={fires} id={blog.id} />
-      </div> */}
+      <div className="px-10 ">
+        <BlogActions
+          likes={likes.length}
+          hearts={hearts.length}
+          fires={fires.length}
+          id={blog.id}
+        />
+      </div>
 
       {/*  <!-- Header--> */}
       <div className="p-10">
