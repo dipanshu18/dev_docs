@@ -20,7 +20,6 @@ async function fetchDrafts(email: string) {
 
 export default async function Drafts() {
   const session = await getServerSession();
-
   const drafts = await fetchDrafts(session?.user?.email!);
 
   if (drafts.length < 1) {

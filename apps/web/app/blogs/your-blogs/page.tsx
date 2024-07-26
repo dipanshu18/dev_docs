@@ -20,7 +20,6 @@ async function fetchUserBlogs(email: string) {
 
 export default async function YourBlogs() {
   const session = await getServerSession();
-
   const userBlogs = await fetchUserBlogs(session?.user?.email!);
 
   if (userBlogs.length < 1) {
