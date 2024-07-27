@@ -1,6 +1,6 @@
+/* eslint-disable @next/next/no-img-element */
 import { prisma } from "../../../../lib/prisma";
 import DraftActions from "../../../../components/DraftActions";
-import Image from "next/image";
 
 async function fetchDraftBlog(id: string) {
   const draft = await prisma.blog.findUnique({
@@ -29,14 +29,10 @@ export default async function DraftDetail({
 
   return (
     <div className="m-10 mockup-code">
-      <Image
+      <img
         src={`https://devdocs-thumbnails.s3.ap-south-1.amazonaws.com/${draft.thumbnail}`}
-        width={500}
-        height={500}
         alt={draft.title + " thumbnail"}
         className="w-full"
-        priority
-        quality={100}
       />
       <div className="px-10 grid grid-cols-1">
         {/*  <!-- Body--> */}

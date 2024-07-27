@@ -5,17 +5,19 @@ import { FormEvent, useRef } from "react";
 import { FaFire, FaHeart, FaThumbsUp } from "react-icons/fa6";
 import { toast } from "sonner";
 
+interface BlogActionsProps {
+  id: string;
+  likes: number;
+  hearts: number;
+  fires: number;
+}
+
 export default function BlogActions({
   id,
   likes,
   hearts,
   fires,
-}: {
-  id: string;
-  likes: number;
-  hearts: number;
-  fires: number;
-}) {
+}: BlogActionsProps) {
   const session: any = useSession();
   const router = useRouter();
 

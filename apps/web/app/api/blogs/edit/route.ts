@@ -1,6 +1,7 @@
 import { getServerSession } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "../../../../lib/prisma";
+import { revalidatePath } from "next/cache";
 
 interface Data {
   title: string;
@@ -39,16 +40,20 @@ export async function PUT(request: NextRequest) {
   if (data.content) updates["body"] = data.content;
   if (data.type) updates["published"] = data.type === "publish" ? true : false;
 
-  const updatedBlog = await prisma.blog.update({
-    where: {
-      id,
-    },
-    data: updates,
-  });
+  try {
+    const updatedBlog = await prisma.blog.update({
+      where: {
+        id,
+      },
+      data: updates,
+    });
 
-  if (updatedBlog) {
-    return NextResponse.json({ msg: "Draft modified" }, { status: 201 });
+    if (updatedBlog) {
+      revalidatePath("/blogs/drafts");
+      return NextResponse.json({ msg: "Draft modified" }, { status: 200 });
+    }
+  } catch (error) {
+    console.error(error);
+    return NextResponse.json({ msg: "Internal server error" }, { status: 500 });
   }
-
-  return NextResponse.json({ msg: "Internal server error" }, { status: 500 });
 }

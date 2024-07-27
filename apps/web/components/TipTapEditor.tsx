@@ -21,6 +21,7 @@ export default function TiptapEditor({
   onChange,
 }: TiptapEditorProps) {
   const editor = useEditor({
+    immediatelyRender: false,
     extensions: [
       HorizontalRule,
       HardBreak,

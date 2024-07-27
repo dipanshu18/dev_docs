@@ -6,43 +6,34 @@ import TiptapEditor from "../../../../../components/TipTapEditor";
 import { toast } from "sonner";
 import EditDraftActions from "../../../../../components/EditDraftActions";
 import { useRouter } from "next/navigation";
-
-interface Draft {
-  id: string;
-  title: string;
-  thumbnail: string;
-  body: string;
-  userId: string;
-  published: boolean;
-  createdAt: Date;
-  updatedAt: Date;
-}
+import { Blog } from "../../../../../types";
 
 export default function EditDraft({ params }: { params: { id: string } }) {
   const router = useRouter();
 
-  const [draft, setDraft] = useState<Draft>();
+  const [draft, setDraft] = useState<Blog>();
 
   async function fetchDraft(id: string) {
     const response = await fetch(`/api/blogs/draft?id=${id}`);
-    const draft = await response.json();
+    const data = await response.json();
 
     if (response.ok) {
-      setDraft(draft);
-      setPreview(draft.thumbnail);
-      setContent(draft.body);
-      setUpdate({ ...update, title: draft.title });
+      setDraft(data);
+      setPreview(data.thumbnail);
+      setContent(data.body);
+
+      setUpdate({ ...update, title: data.title });
       return;
     }
 
-    return toast.error(draft.msg);
+    return toast.error(data.msg);
   }
 
   useEffect(() => {
     fetchDraft(params.id);
   }, []);
 
-  const [content, setContent] = useState<{ content?: string }>();
+  const [content, setContent] = useState<{ content: string }>();
   const [preview, setPreview] = useState<string | null>(null);
   const [update, setUpdate] = useState<{
     thumbnail: undefined | File | string;
@@ -108,9 +99,7 @@ export default function EditDraft({ params }: { params: { id: string } }) {
     setLoading(true);
 
     if (update.thumbnail && update.thumbnail instanceof File) {
-      const s3Response = await fetch(
-        `/api/s3-upload?fileName=${update.thumbnail.name}`
-      );
+      const s3Response = await fetch(`/api/s3-upload?draftId=${draft?.id}`);
 
       const response = await s3Response.json();
       if (s3Response.ok) {
@@ -149,11 +138,15 @@ export default function EditDraft({ params }: { params: { id: string } }) {
           : toast.success("Draft saved!");
 
         setLoading(false);
+
+        type === "publish"
+          ? router.replace("/blogs")
+          : router.replace("/blogs/drafts");
         router.refresh();
-        type === "publish" ? router.push("/blogs") : "";
         return;
       }
 
+      router.refresh();
       setLoading(false);
       return toast.error("Something went wrong!");
     }
@@ -197,7 +190,11 @@ export default function EditDraft({ params }: { params: { id: string } }) {
         </div>
 
         <div className="form-control">
-          <TiptapEditor blog={draft} content={content} onChange={setContent} />
+          <TiptapEditor
+            blog={draft}
+            content={content?.content}
+            onChange={setContent}
+          />
         </div>
 
         <div className="form-control flex flex-row my-10 gap-5">

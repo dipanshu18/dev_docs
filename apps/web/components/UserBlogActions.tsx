@@ -3,18 +3,10 @@
 import { useRouter } from "next/navigation";
 import { deleteBlog, publishUnpublishBlog } from "../lib/actions/draft";
 import { toast } from "sonner";
+import { Blog } from "../types";
 
 interface BlogProps {
-  blog: {
-    id: string;
-    title: string;
-    thumbnail: string;
-    body: string;
-    userId: string;
-    published: boolean;
-    createdAt: Date;
-    updatedAt: Date;
-  };
+  blog: Blog;
 }
 
 export default function UserBlogActions({ blog }: BlogProps) {

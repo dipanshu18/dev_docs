@@ -1,18 +1,14 @@
-import Image from "next/image";
+/* eslint-disable @next/next/no-img-element */
 import Link from "next/link";
 
 export default function DraftsCard({ blog }: any) {
   return (
     <div className="card bg-base-300 w-full shadow-xl">
       <figure>
-        <Image
+        <img
           src={`https://devdocs-thumbnails.s3.ap-south-1.amazonaws.com/${blog.thumbnail}`}
           alt={blog.title + " thumbnail"}
-          width={1000}
-          height={420}
           className="w-full"
-          priority
-          quality={100}
         />
       </figure>
       <div className="card-body">

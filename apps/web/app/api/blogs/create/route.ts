@@ -2,6 +2,7 @@ import { getServerSession } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "../../../../lib/prisma";
 import { z } from "zod";
+import { revalidatePath } from "next/cache";
 
 const BlogData = z.object({
   thumbnailUrl: z.string(),
@@ -44,6 +45,7 @@ export async function POST(request: NextRequest) {
   });
 
   if (newBlog) {
+    revalidatePath("/blogs");
     return NextResponse.json({ msg: "Blog created" }, { status: 201 });
   }
 

@@ -4,18 +4,10 @@ import Link from "next/link";
 import { deleteBlog, publishUnpublishBlog } from "../lib/actions/draft";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
+import { Blog } from "../types";
 
 interface DraftProps {
-  draft: {
-    id: string;
-    title: string;
-    thumbnail: string;
-    body: string;
-    userId: string;
-    published: boolean;
-    createdAt: Date;
-    updatedAt: Date;
-  };
+  draft: Blog;
 }
 
 export default function DraftActions({ draft }: DraftProps) {

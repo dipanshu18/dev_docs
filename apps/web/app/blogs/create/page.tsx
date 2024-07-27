@@ -5,18 +5,14 @@ import { useRouter } from "next/navigation";
 import TiptapEditor from "../../../components/TipTapEditor";
 import { FormEvent, useState } from "react";
 import { toast } from "sonner";
+import { CreateBlog } from "../../../types";
 
 export default function WriteBlog() {
   const router = useRouter();
   const [preview, setPreview] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
-  const [blog, setBlog] = useState<{
-    thumbnail: undefined | File | string;
-    title: string;
-    content: string;
-    type: "draft" | "publish";
-  }>({
+  const [blog, setBlog] = useState<CreateBlog>({
     thumbnail: undefined,
     title: "",
     content: "",
@@ -69,9 +65,7 @@ export default function WriteBlog() {
     setLoading(true);
 
     if (blog.thumbnail && blog.thumbnail instanceof File) {
-      const s3Response = await fetch(
-        `/api/s3-upload?fileName=${blog.thumbnail.name}`
-      );
+      const s3Response = await fetch(`/api/s3-upload`);
 
       const response = await s3Response.json();
       if (s3Response.ok) {
@@ -89,6 +83,7 @@ export default function WriteBlog() {
         }
 
         blogData["thumbnailUrl"] = await response.key;
+        toast.success("Thumbnail uploaded");
       } else {
         setLoading(false);
         return toast.error("Something went wrong!");
@@ -111,7 +106,8 @@ export default function WriteBlog() {
 
       setLoading(false);
       router.refresh();
-      return router.push("/blogs");
+
+      return router.replace("/blogs");
     }
 
     setLoading(false);

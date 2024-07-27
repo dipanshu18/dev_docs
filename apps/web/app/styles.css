@@ -23,8 +23,10 @@
 }
 
 .ProseMirror code {
-  background-color: rgba(#616161, 0.1);
+  background-color: rgba(97, 97, 97, 0.1);
   color: #616161;
+  white-space: pre-wrap; /* Ensure code wraps */
+  word-break: break-word; /* Break words if necessary */
 }
 
 .ProseMirror pre {
@@ -33,6 +35,9 @@
   color: #fff;
   font-family: "JetBrainsMono", monospace;
   padding: 0.75rem 1rem;
+  overflow-x: auto; /* Add scroll only when necessary */
+  white-space: pre-wrap; /* Ensure code wraps */
+  word-break: break-word; /* Break words if necessary */
 }
 
 .ProseMirror code {
@@ -74,8 +79,10 @@ p:empty::before {
 }
 
 .mockup-code code {
-  background-color: rgba(#616161, 0.1);
+  background-color: rgba(97, 97, 97, 0.1);
   color: #616161;
+  white-space: pre-wrap; /* Ensure code wraps */
+  word-break: break-word; /* Break words if necessary */
 }
 
 .mockup-code pre {
@@ -84,6 +91,9 @@ p:empty::before {
   color: #fff;
   font-family: "JetBrainsMono", monospace;
   padding: 0.75rem 1rem;
+  overflow-x: auto; /* Add scroll only when necessary */
+  white-space: pre-wrap; /* Ensure code wraps */
+  word-break: break-word; /* Break words if necessary */
 }
 
 .mockup-code code {

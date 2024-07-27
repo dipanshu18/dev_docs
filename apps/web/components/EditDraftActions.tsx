@@ -4,18 +4,10 @@ import { useState } from "react";
 import { deleteBlog } from "../lib/actions/draft";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
+import { Blog } from "../types";
 
 interface EditDraftActionsProps {
-  draft: {
-    id: string;
-    title: string;
-    thumbnail: string;
-    body: string;
-    userId: string;
-    published: boolean;
-    createdAt: Date;
-    updatedAt: Date;
-  };
+  draft: Blog;
 }
 
 export default function EditDraftActions({ draft }: EditDraftActionsProps) {
