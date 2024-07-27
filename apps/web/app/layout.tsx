@@ -1,10 +1,7 @@
 import { Metadata } from "next";
-import "./styles.css";
-import { Poppins } from "next/font/google";
+import "./globals.css";
 import { NextAuthProvider } from "./providers";
 import { Toaster } from "sonner";
-
-const poppins = Poppins({ subsets: ["latin"], weight: "400" });
 
 export const metadata: Metadata = {
   title: "Dev Docs",
@@ -19,7 +16,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={poppins.className}>
+      <body>
         <NextAuthProvider>
           <main>
             {children}
