@@ -4,6 +4,7 @@ import { prisma } from "../../../lib/prisma";
 
 import ProfileBlogsEmpty from "../../../public/profileBlogsEmpty.jpg";
 import Image from "next/image";
+import { Blog } from "../../../types";
 
 async function fetchUserBlogs(email: string) {
   const userBlogs = await prisma.blog.findMany({
@@ -44,7 +45,7 @@ export default async function YourBlogs() {
   return (
     <div className="my-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 place-items-center p-5 gap-10">
       {userBlogs &&
-        userBlogs.map((blog) => (
+        userBlogs.map((blog: Blog) => (
           <BlogCard type="user" key={blog.id} blog={blog} />
         ))}
     </div>

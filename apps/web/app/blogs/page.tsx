@@ -4,6 +4,7 @@ import { prisma } from "../../lib/prisma";
 
 import BlogsEmpty from "../../public/NoBlogsHome.jpg";
 import SearchBlogs from "../../components/SearchBlogs";
+import { Blog } from "../../types";
 
 async function fetchBlogs() {
   const blogs = await prisma.blog.findMany({
@@ -38,7 +39,7 @@ export default async function Blogs() {
       <SearchBlogs />
       <div className="my-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 place-items-center p-5 gap-10">
         {blogs &&
-          blogs.map((blog) => (
+          blogs.map((blog: Blog) => (
             <BlogCard type="all" key={blog.id} blog={blog} />
           ))}
       </div>

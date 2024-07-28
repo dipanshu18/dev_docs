@@ -4,6 +4,7 @@ import { prisma } from "../../../lib/prisma";
 
 import DraftsEmpty from "../../../public/draftsEmpty.jpg";
 import Image from "next/image";
+import { Blog } from "../../../types";
 
 async function fetchDrafts(email: string) {
   const drafts = await prisma.blog.findMany({
@@ -43,7 +44,7 @@ export default async function Drafts() {
   return (
     <div className="my-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 place-items-center p-5 gap-10">
       {drafts &&
-        drafts.map((draft) => <DraftsCard key={draft.id} blog={draft} />)}
+        drafts.map((draft: Blog) => <DraftsCard key={draft.id} blog={draft} />)}
     </div>
   );
 }

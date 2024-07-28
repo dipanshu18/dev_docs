@@ -4,6 +4,25 @@ import BlogActions from "../../../components/BlogActions";
 import BlogComment from "../../../components/BlogComment";
 import CommentBubble from "../../../components/CommentBubble";
 
+interface Comment {
+  user: {
+    id: string;
+    name: string | null;
+    image: string | null;
+  };
+  id: string;
+  body: string;
+  replies: {
+    user: {
+      id: string;
+      name: string | null;
+      image: string | null;
+    };
+    id: string;
+    body: string;
+  }[];
+}
+
 async function fetchBlog(id: string) {
   const blog = await prisma.blog.findUnique({
     where: {
@@ -122,7 +141,7 @@ export default async function BlogDetail({
         <BlogComment id={blog.id} />
 
         <div className="mt-5">
-          {blog.comments.map((comment) => (
+          {blog.comments.map((comment: Comment) => (
             <CommentBubble
               key={comment.id}
               comment={comment}
