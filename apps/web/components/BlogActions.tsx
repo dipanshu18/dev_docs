@@ -27,7 +27,7 @@ export default function BlogActions({
     e.preventDefault();
 
     if (session) {
-      await fetch("http://localhost:3000/api/blogs/reactions", {
+      await fetch("/api/blogs/reactions", {
         method: "PUT",
         body: JSON.stringify({
           blogId: id,
