@@ -100,7 +100,7 @@ export default function CommentBubble({ comment, blogId }: CommentProps) {
       </div>
 
       {showReplyInput && (
-        <div className="flex gap-5 mt-2 px-20 w-full">
+        <div className="flex gap-5 mt-2 w-full">
           <input
             type="text"
             onChange={(e) => setCommentReply(e.target.value)}
