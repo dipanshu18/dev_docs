@@ -164,7 +164,7 @@ export default function EditDraft({ params }: { params: { id: string } }) {
                 src={
                   update.thumbnail
                     ? preview
-                    : `https://devdocs-thumbnails.s3.ap-south-1.amazonaws.com/${preview}`
+                    : `https://d3cr7gxsw8m9yz.cloudfront.net/${preview}`
                 }
                 alt="Thumbnail Preview"
                 className="w-full"

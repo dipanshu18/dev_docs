@@ -6,7 +6,7 @@ export default function DraftsCard({ blog }: any) {
     <div className="card bg-base-300 w-full shadow-xl">
       <figure>
         <img
-          src={`https://devdocs-thumbnails.s3.ap-south-1.amazonaws.com/${blog.thumbnail}`}
+          src={`https://d3cr7gxsw8m9yz.cloudfront.net/${blog.thumbnail}`}
           alt={blog.title + " thumbnail"}
           className="w-full"
         />

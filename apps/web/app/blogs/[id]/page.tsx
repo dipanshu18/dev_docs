@@ -89,7 +89,7 @@ export default async function BlogDetail({
     <>
       <div className="m-10 mockup-code bg-gray-800">
         <Image
-          src={`https://devdocs-thumbnails.s3.ap-south-1.amazonaws.com/${blog.thumbnail}`}
+          src={`https://d3cr7gxsw8m9yz.cloudfront.net/${blog.thumbnail}`}
           alt={blog.title + " thumbnail"}
           width={500}
           height={500}

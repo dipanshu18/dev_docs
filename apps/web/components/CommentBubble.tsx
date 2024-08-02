@@ -75,7 +75,6 @@ export default function CommentBubble({ comment, blogId }: CommentProps) {
               <button
                 className="btn btn-ghost"
                 onClick={async () => {
-                  console.log(comment.id);
                   await deleteCommentBlog(comment.id);
                   router.refresh();
                 }}

@@ -14,7 +14,7 @@ const nextConfig = {
       },
       {
         protocol: "https",
-        hostname: "devdocs-thumbnails.s3.ap-south-1.amazonaws.com",
+        hostname: "d3cr7gxsw8m9yz.cloudfront.net",
       },
     ],
   },

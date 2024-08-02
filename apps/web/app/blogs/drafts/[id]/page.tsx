@@ -30,7 +30,7 @@ export default async function DraftDetail({
   return (
     <div className="m-10 mockup-code">
       <img
-        src={`https://devdocs-thumbnails.s3.ap-south-1.amazonaws.com/${draft.thumbnail}`}
+        src={`https://d3cr7gxsw8m9yz.cloudfront.net/${draft.thumbnail}`}
         alt={draft.title + " thumbnail"}
         className="w-full"
       />

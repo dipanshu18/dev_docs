@@ -37,7 +37,7 @@ export default async function YourBlogDetail({
   return (
     <div className="m-10 mockup-code">
       <Image
-        src={`https://devdocs-thumbnails.s3.ap-south-1.amazonaws.com/${userBlog.thumbnail}`}
+        src={`https://d3cr7gxsw8m9yz.cloudfront.net/${userBlog.thumbnail}`}
         alt={userBlog.title + " thumbnail"}
         width={1000}
         height={420}
